@@ -11,7 +11,7 @@ import net.sixtusdev.banking.dto.AccountDto;
 import net.sixtusdev.banking.service.AccountService;
 
 @RestController
-@RequestMapping("/api/account")
+@RequestMapping("/api/accounts")
 
 public class AccountController {
     private AccountService accountService;
