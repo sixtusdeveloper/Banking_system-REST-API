@@ -1,5 +1,8 @@
 package net.sixtusdev.banking.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import net.sixtusdev.banking.dto.AccountDto;
@@ -16,6 +19,7 @@ public class AccountServiceImpl implements AccountService {
         this.accountRepository = accountRepository;
     }
 
+    // Add Account Rest API
     @Override
     public AccountDto createAccount(AccountDto accountDto) {
         Account account = AccountMapper.mapToAccount(accountDto);
@@ -23,6 +27,7 @@ public class AccountServiceImpl implements AccountService {
         return AccountMapper.mapToAccountDto(savedAccount);
     }
 
+    // Get Account By Id Rest API
     @Override
     public AccountDto getAccountById(Long accountId) {
         Account account = accountRepository.findById(accountId)
@@ -30,6 +35,7 @@ public class AccountServiceImpl implements AccountService {
         return AccountMapper.mapToAccountDto(account);
     }
 
+    // Deposit Rest API
     @Override
     public AccountDto deposit(Long accountId, double amount) {
         Account account = accountRepository.findById(accountId)
@@ -41,6 +47,7 @@ public class AccountServiceImpl implements AccountService {
         return AccountMapper.mapToAccountDto(savedAccount);
     }
 
+    // Withdraw Rest API
     @Override
     public AccountDto withdraw(Long accountId, double amount) {
         Account account = accountRepository.findById(accountId)
@@ -54,6 +61,23 @@ public class AccountServiceImpl implements AccountService {
         account.setBalance(total);
         Account savedAccount = accountRepository.save(account);
         return AccountMapper.mapToAccountDto(savedAccount);
+    }
+
+    // Get All Accounts Rest API
+    @Override
+    public List<AccountDto> getAllAccounts() {
+        List<Account> accounts = accountRepository.findAll();
+        return accounts.stream().map((account) -> AccountMapper.mapToAccountDto(account))
+                .collect(Collectors.toList());
+    }
+
+    // Delete Account Rest API
+    @Override
+    public void deleteAccount(Long accountId) {
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new RuntimeException("Account not found"));
+        accountRepository.deleteById(account.getId());
+
     }
 
 }

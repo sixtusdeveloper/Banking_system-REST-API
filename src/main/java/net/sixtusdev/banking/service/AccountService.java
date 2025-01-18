@@ -1,5 +1,7 @@
 package net.sixtusdev.banking.service;
 
+import java.util.List;
+
 import net.sixtusdev.banking.dto.AccountDto;
 
 public interface AccountService {
@@ -10,4 +12,8 @@ public interface AccountService {
     AccountDto deposit(Long accountId, double amount);
 
     AccountDto withdraw(Long accountId, double amount);
+
+    List<AccountDto> getAllAccounts();
+
+    void deleteAccount(Long accountId);
 }
